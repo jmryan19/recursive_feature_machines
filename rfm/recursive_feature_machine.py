@@ -181,7 +181,7 @@ class RecursiveFeatureMachine(torch.nn.Module):
     def fit(self, train_data, test_data, iters=None, method='lstsq', 
             classification=True, verbose=True, M_batch_size=None, 
             return_best_params=False, bs=None, 
-            return_Ms=False, lr_scale=1, total_points_to_sample=20000, 
+            return_Ms=False, lr_scale=1, total_points_to_sample=20000, use_sqrtM = False,
             solver='solve', fit_last_M=False, prefit_eigenpro=True, 
             **kwargs):
         """
@@ -204,7 +204,7 @@ class RecursiveFeatureMachine(torch.nn.Module):
         self.verbose = verbose
         self.fit_using_eigenpro = (method.lower()=='eigenpro')
         self.prefit_eigenpro = prefit_eigenpro
-        self.use_sqrtM = self.kernel_type in ['laplacian_gen', 'generic']
+        self.use_sqrtM = use_sqrtM
         self.classification = classification
 
         if iters is None:
@@ -354,7 +354,7 @@ class RecursiveFeatureMachine(torch.nn.Module):
         
         self.M = M / (M.max() + 1e-30)
         if use_sqrtM:
-            self.sqrtM = matrix_power(self.M, self.agop_power)
+            self.M = matrix_power(self.M, self.agop_power)
         del M
 
         
