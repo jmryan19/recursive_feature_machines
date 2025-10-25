@@ -9,7 +9,7 @@ There are two notebooks to test out RFM:
 
 Can be installed using the command
 ```
- pip install git+https://github.com/aradha/recursive_feature_machines.git@pip_install
+ pip install git+https://github.com/jmryan19/recursive_feature_machines.git@pip_install
 ```
 ## Requirements:
 - Python 3.8+
