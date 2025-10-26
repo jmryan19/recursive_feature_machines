@@ -7,6 +7,7 @@ from .kernels import laplacian_M, gaussian_M, euclidean_distances_M, laplacian_g
 from tqdm.contrib import tenumerate
 from .utils import matrix_power, get_data_from_loader
 import time
+import wandb
 
 class RecursiveFeatureMachine(torch.nn.Module):
     """
@@ -239,15 +240,20 @@ class RecursiveFeatureMachine(torch.nn.Module):
             
             if classification:
                 test_acc = self.score(X_test, y_test, bs, metric='accuracy')
-                if method == 'lstsq':
-                    train_acc = self.score(X_train, y_train, bs, metric='accuracy')
+                wandb.log({
+                'validation/val_acc': test_acc
+            }, step=i)
+                
+                train_acc = self.score(X_train, y_train, bs, metric='accuracy')
+                wandb.log({'training/train_acc': train_acc}, step = i})
+                
                     if verbose:
                         print(f"Round {i}, Train Acc: {100*train_acc:.2f}%, Test Acc: {100*test_acc:.2f}%")
-                else:
-                    if verbose:
-                        print(f"Round {i}, Test Acc: {100*test_acc:.2f}%")
 
             test_mse = self.score(X_test, y_test, bs, metric='mse')
+            train_mse = self.score(X_train, y_train, bs, metric='mse')
+            wandb.log({'validation/val_mse': test_mse}, step = i})
+            wandb.log({'training/train_mse': train_mse}, step = i}
 
             if verbose:
                 print(f"Round {i}, Test MSE: {test_mse:.4f}")
