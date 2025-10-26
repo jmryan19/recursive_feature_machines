@@ -247,8 +247,8 @@ class RecursiveFeatureMachine(torch.nn.Module):
                 train_acc = self.score(X_train, y_train, bs, metric='accuracy')
                 wandb.log({'training/train_acc': train_acc}, step = i)
                 
-                    if verbose:
-                        print(f"Round {i}, Train Acc: {100*train_acc:.2f}%, Test Acc: {100*test_acc:.2f}%")
+                if verbose:
+                    print(f"Round {i}, Train Acc: {100*train_acc:.2f}%, Test Acc: {100*test_acc:.2f}%")
 
             test_mse = self.score(X_test, y_test, bs, metric='mse')
             train_mse = self.score(X_train, y_train, bs, metric='mse')
