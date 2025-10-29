@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name='rfm',
+    name='jrfm',
     version='1.0',
     author='Adityanarayanan Radhakrishnan, Daniel Beaglehole, Parthe Pandit',
     author_email='aradha@mit.edu, dbeaglehole@ucsd.edu, parthepandit@ucsd.edu',
